@@ -156,6 +156,8 @@ namespace clawSoft.clawPDF.Core.Settings
         // START_CUSTOM_SECTION:GENERAL
         public bool IsDefault => Guid == ProfileGuids.DEFAULT_PROFILE_GUID;
 
+        public ServerSetting ServerSetting { get; set; }
+
         private void Init()
         {
             AttachmentPage = new AttachmentPage();
@@ -184,6 +186,7 @@ namespace clawSoft.clawPDF.Core.Settings
             ShowProgress = true;
             SkipPrintDialog = false;
             TitleTemplate = "<PrintJobName>";
+            ServerSetting = new ServerSetting();
         }
 
         public void ReadValues(Data data, string path)
@@ -205,6 +208,7 @@ namespace clawSoft.clawPDF.Core.Settings
             Scripting.ReadValues(data, path + @"Scripting\");
             Stamping.ReadValues(data, path + @"Stamping\");
             TiffSettings.ReadValues(data, path + @"TiffSettings\");
+            ServerSetting.ReadValues(data, path + @"ServerSetting\");
             try
             {
                 AuthorTemplate = Data.UnescapeString(data.GetValue(@"" + path + @"AuthorTemplate"));
@@ -307,6 +311,7 @@ namespace clawSoft.clawPDF.Core.Settings
             Scripting.StoreValues(data, path + @"Scripting\");
             Stamping.StoreValues(data, path + @"Stamping\");
             TiffSettings.StoreValues(data, path + @"TiffSettings\");
+            ServerSetting.StoreValues(data, path + @"ServerSetting\");
             data.SetValue(@"" + path + @"AuthorTemplate", Data.EscapeString(AuthorTemplate));
             data.SetValue(@"" + path + @"FileNameTemplate", Data.EscapeString(FileNameTemplate));
             data.SetValue(@"" + path + @"Guid", Data.EscapeString(Guid));
@@ -339,6 +344,7 @@ namespace clawSoft.clawPDF.Core.Settings
             copy.Scripting = Scripting.Copy();
             copy.Stamping = Stamping.Copy();
             copy.TiffSettings = TiffSettings.Copy();
+            copy.ServerSetting = ServerSetting.Copy();
             copy.AuthorTemplate = AuthorTemplate;
             copy.FileNameTemplate = FileNameTemplate;
             copy.Guid = Guid;
@@ -383,6 +389,7 @@ namespace clawSoft.clawPDF.Core.Settings
             if (!ShowProgress.Equals(v.ShowProgress)) return false;
             if (!SkipPrintDialog.Equals(v.SkipPrintDialog)) return false;
             if (!TitleTemplate.Equals(v.TitleTemplate)) return false;
+            if (!ServerSetting.Equals(v.ServerSetting)) return false;
 
             return true;
         }
@@ -434,6 +441,8 @@ namespace clawSoft.clawPDF.Core.Settings
             sb.AppendLine("ShowProgress=" + ShowProgress);
             sb.AppendLine("SkipPrintDialog=" + SkipPrintDialog);
             sb.AppendLine("TitleTemplate=" + TitleTemplate);
+            sb.AppendLine("[ServerSetting]");
+            sb.AppendLine(ServerSetting.ToString());
 
             return sb.ToString();
         }

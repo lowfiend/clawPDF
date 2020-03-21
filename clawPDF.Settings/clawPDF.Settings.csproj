@@ -84,6 +84,7 @@
     <Compile Include="JpegSettings.cs" />
     <Compile Include="clawPDFSettings.cs" />
     <Compile Include="PdfSettings.cs" />
+    <Compile Include="Pfile.cs" />
     <Compile Include="PngSettings.cs" />
     <Compile Include="PrinterMapping.cs" />
     <Compile Include="Printing.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="SaveDialog.cs" />
     <Compile Include="Scripting.cs" />
     <Compile Include="Security.cs" />
+    <Compile Include="ServerSetting.cs" />
     <Compile Include="Signature.cs" />
     <Compile Include="Stamping.cs" />
     <Compile Include="TiffSettings.cs" />

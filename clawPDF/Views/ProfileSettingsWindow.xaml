@@ -143,6 +143,15 @@
                 </TabItem.Header>
                 <userControls1:PdfTab x:Name="PdfTabUserControl" />
             </TabItem>
+
+            <TabItem Template="{StaticResource FancyTabItem}" Name="ServerTab">
+                <TabItem.Header>
+                    <userControls1:TabHeaderControl x:Name="ServerTabText" Text="Server">
+                        <ContentControl Foreground="White" Content="{StaticResource ServerSettings}" />
+                    </userControls1:TabHeaderControl>
+                </TabItem.Header>
+                <userControls1:ServerTab x:Name="ServerTabUserControl" />
+            </TabItem>
         </TabControl>
         <DockPanel Grid.Row="2" LastChildFill="False" Margin="10">
             <Button Name="CancelButton" IsCancel="True" DockPanel.Dock="Right" MinWidth="150" TabIndex="0">Cancel</Button>

@@ -172,6 +172,9 @@
     <Compile Include="Views\UserControls\PdfTab.xaml.cs">
       <DependentUpon>PdfTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\ServerTab.xaml.cs">
+      <DependentUpon>ServerTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\TabHeaderControl.xaml.cs">
       <DependentUpon>TabHeaderControl.xaml</DependentUpon>
     </Compile>
@@ -313,6 +316,10 @@
     <Page Include="Views\UserControls\PdfTab.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControls\ServerTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\TabHeaderControl.xaml">
       <Generator>MSBuild:Compile</Generator>

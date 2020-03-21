@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using clawSoft.clawPDF.Core.Actions;
 using clawSoft.clawPDF.Core.Ghostscript.OutputDevices;
 using clawSoft.clawPDF.Core.Settings;
@@ -10,6 +12,8 @@ using clawSoft.clawPDF.PDFProcessing;
 using clawSoft.clawPDF.Utilities;
 using clawSoft.clawPDF.Utilities.IO;
 using clawSoft.clawPDF.Utilities.Tokens;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using SystemInterface.IO;
 using SystemWrapper.IO;
@@ -371,8 +375,32 @@ namespace clawSoft.clawPDF.Core.Jobs
         public void InitMetadata()
         {
             JobInfo.Metadata.Author = Profile.AuthorTemplate;
-            JobInfo.Metadata.Title = Profile.TitleTemplate;
+
+            if (String.IsNullOrEmpty(Profile.ServerSetting.ApiUrl))
+            {
+                JobInfo.Metadata.Title = Profile.TitleTemplate;
+            } else {
+                JobInfo.Metadata.Title = getTitle();
+            }
             ApplyMetadata();
+        }
+
+        public String getTitle()
+        {
+            String title = "";
+            HttpClient client = new HttpClient() { BaseAddress = new Uri(Profile.ServerSetting.ApiUrl) };
+
+            JObject main = new JObject();
+            JObject mParams = new JObject();
+
+            main.Add("rpcId", "APP_GENFILE");
+            mParams.Add("APPID", "FLOW01");
+            main.Add("params", mParams);
+            HttpContent contentPost = new StringContent(main.ToString(), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync("", contentPost).GetAwaiter().GetResult();
+
+            Pfile pfile = JsonConvert.DeserializeObject<Pfile>(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());//反序列化
+            return pfile.result[0].PFILE;
         }
 
         /// <summary>
